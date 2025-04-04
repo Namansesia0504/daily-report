@@ -5,21 +5,33 @@ tweet.it
 {% endblock %}
 
 {% block content %}
-<h1 class="text-center text-white mt-4">Welcome to tweet.it</h1>
-<a class="btn btn-primary mb-4" href="{% url 'tweet_create' %}">Create a tweet</a> 
-<div class="container row gap-3">
-    {% for tweet in tweets  %}
-    <div class="card" style="width: 18rem;">
-        <img src="{{tweet.photo.url}}" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">{{tweet.user.username}}
-          </h5>
-          <p class="card-text">{{tweet.text}}</p>
-          <a href="{% url 'tweet_edit' tweet.id %}" class="btn btn-primary">Edit</a>
-          <a href="{% url 'tweet_delete' tweet.id %}" class="btn btn-primary">Delete</a>
-        </div>
-      </div>
-    {% endfor %}
 
+<a class="btn btn-primary mb-4 my-4" href="{% url 'tweet_create' %}">Create a tweet</a> 
+
+<div class="container row gap-4">
+    {% for tweet in tweets %}
+    <div class="col-md-3">  
+        <div class="card" style="width: 18rem;">
+            
+            {% if tweet.photo %}
+                <img style="aspect-ratio: 1 / 1; object-fit: cover" src="{{ tweet.photo.url }}" class="card-img-top" alt="Tweet photo">
+            {% else %}
+                <img style="aspect-ratio: 1 / 1; object-fit: cover" src="path/to/default/image.jpg" class="card-img-top" alt="No photo available">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ tweet.user.username }}</h5>
+                <p class="card-text">{{ tweet.text }}</p>
+
+                <a href="{% url 'tweet_edit' tweet.id %}" class="btn btn-primary">Edit</a>
+
+                
+                <form method="post" action="{% url 'tweet_delete' tweet.id %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
 </div>
 {% endblock %}

@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
+import pymysql
+pymysql.install_as_MySQLdb()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -39,7 +42,21 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'tweet',
     'static',
+    
 ]
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'tweet1',
+        'USER': 'root',
+        'PASSWORD': 'King#123',
+        'HOST': 'localhost',  # Set to '127.0.0.1' for local development
+        'PORT': '3306',       # Default MySQL port
+       
+    }
+}
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -75,12 +92,7 @@ WSGI_APPLICATION = 'Chaiheadq.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+ 
 
 
 # Password validation
@@ -126,12 +138,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Define the media URL and the root directory
 MEDIA_URL = '/media/'  # URL to access media files
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # File system path to store media files
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # File system path to store media fi
 
-
-# URL to access static files (usually /static/)
 STATIC_URL = '/static/'
 
-# The directory where static files will be collected in production
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# Add this if static files are not loading in development
+STATIC_ROOT = [
+    os.path.join(BASE_DIR, "static"),
+]
 
+
+LOGIN_URL = '/accounts/login'
+LOGIN_REDIRECT_URL = '/tweet/'
+LOGOUT_REDIRECT_URL = '/tweet/'

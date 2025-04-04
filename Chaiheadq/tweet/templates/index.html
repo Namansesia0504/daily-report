@@ -1,9 +1,12 @@
 {% extends "layout.html" %}
 
 {% block title %}
-Django and code 
+Tweet.it  
 {% endblock %}
 
 {% block content %}
+{% load static %}
 <h1 class="text-center text-white mt-4">Welcome to TWEET.it</h1>
-{% endblock %}
+<p class="text-center text-white mt-4 text-danger" >Tweet It is a website designed for users to share their thoughts and ideas with the world by tweeting. It offers a simple, user-friendly platform where individuals can post short messages—referred to as tweets—about anything on their mind, whether it's a quick thought, opinion, news, or anything they'd like to share. The homepage of **Tweet It** would feature an intuitive design with a prominent tweet input box, encouraging users to easily compose and share their tweets. Users can engage with others' tweets, follow their favorite accounts, and stay up-to-date with the latest trends and discussions. The website aims to foster open expression and instant communication in a fast-paced digital world. </p>
+<img src= "{% static 'images/image3.jpeg' %}" > 
+{% endblock %} 
