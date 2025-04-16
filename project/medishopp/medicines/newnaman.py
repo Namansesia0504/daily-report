@@ -8,3 +8,4 @@ class MedicineSerializer(serializers.ModelSerializer):
         model = Medicine
         fields = '__all__'
         read_only_fields = ['seller']
+                                                     

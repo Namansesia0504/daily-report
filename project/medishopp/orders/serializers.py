@@ -20,17 +20,13 @@ class OrderSerializer(serializers.ModelSerializer):
         read_only_fields = ['user', 'status', 'created_at']
 
     def create(self, validated_data):
-        items_data = validated_data.pop('items')
-        user = self.context['request'].user
+     user = validated_data.pop('user', None)  # remove 'user' from validated_data
+     items_data = validated_data.pop('items', [])
+     total_price = sum(item['medicine'].price * item['quantity'] for item in items_data)
 
-        total_price = 0
-        for item in items_data:
-            med = Medicine.objects.get(id=item['medicine'].id)
-            total_price += med.price * item['quantity']
+     order = Order.objects.create(user=user, total_price=total_price, **validated_data)
 
-        order = Order.objects.create(user=user, total_price=total_price, **validated_data)
+     for item in items_data:
+        OrderItem.objects.create(order=order, **item)
 
-        for item in items_data:
-            OrderItem.objects.create(order=order, **item)
-
-        return order
+     return order

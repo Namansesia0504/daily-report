@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'orders',
     'cart',
     'reminders',
+    'chatbot'
 ]
 AUTH_USER_MODEL = 'users.User'
 REST_FRAMEWORK = {
@@ -51,6 +52,9 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
 }
+# Stripe configuration
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

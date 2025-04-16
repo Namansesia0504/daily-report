@@ -36,8 +36,11 @@ urlpatterns = [
 
     # Reminder APIs
     path('api/reminders/', include('reminders.urls')),
+
+     path("api/", include("chatbot.urls")),
 ]
 
 # Serve media files in development
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
